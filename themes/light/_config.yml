@@ -1,10 +1,12 @@
 menu:
   Home: /
   Archives: /archives
+  Github: https://github.com/saravanaj
+  Twitter: https://twitter.com/saravanaj1
+  Feed: /atom.xml
 
 widgets:
 - search
-- category
 - tag
 - recent_posts
 

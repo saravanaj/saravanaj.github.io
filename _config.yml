@@ -64,7 +64,12 @@ pagination_dir: page
 ## Plugins: http://hexo.io/plugins/
 ## Themes: http://hexo.io/themes/
 theme: light
-	
+
+feed:
+  type: atom
+  path: atom.xml
+  limit: 0
+
 twitter:
   username: saravanaj1
   show_replies: false
