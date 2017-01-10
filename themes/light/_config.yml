@@ -7,7 +7,6 @@ menu:
   Feed: /atom.xml
 
 widgets:
-- search
 - tag
 - recent_posts
 
