@@ -6,7 +6,7 @@ tags:
 - config
 ---
 
-Visual Studio Code is an excellent IDE for frontend development. One of the great things about it is how easily it integrates with other tools. Let's see how to integrate it with Mocha and debug tests written in TypeScript right inside VS Code:
+Visual Studio Code is an excellent editor for JavaScript/TypeScript development. One of the great things about it is how easily it integrates with other tools. Let's see how to integrate it with Mocha and debug tests written in TypeScript:
 
 ### Folder Structure
 
