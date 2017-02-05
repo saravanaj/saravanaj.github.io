@@ -1,4 +1,5 @@
 title: Hexo Setup
+date: 2015-11-09 19:48:10
 tags: 
 - hexo
 - setup
