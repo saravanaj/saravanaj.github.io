@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Saravana J</title>
+  
+  
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="https://saravanaj.github.io/"/>
+  <updated>2019-12-08T17:45:10.036Z</updated>
+  <id>https://saravanaj.github.io/</id>
+  
+  <author>
+    <name>Saravana J</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Debugging Mocha Tests Written in TypeScript with Visual Studio Code</title>
+    <link href="https://saravanaj.github.io/2017/02/05/debugging-mocha-tests-written-in-typescript-with-visual-studio-code/"/>
+    <id>https://saravanaj.github.io/2017/02/05/debugging-mocha-tests-written-in-typescript-with-visual-studio-code/</id>
+    <published>2017-02-05T03:25:38.000Z</published>
+    <updated>2019-12-08T17:45:10.036Z</updated>
+    
+    <content type="html"><![CDATA[<p>Visual Studio Code is an excellent editor for JavaScript/TypeScript development. One of the great things about it is how easily it integrates with other tools. Let’s see how to integrate it with Mocha and debug tests written in TypeScript:</p><h3 id="Folder-Structure"><a href="#Folder-Structure" class="headerlink" title="Folder Structure"></a>Folder Structure</h3><p>Here is my folder structure. The code I want to test is in <code>src/main.ts</code> and my tests are in <code>test/main.test.ts</code>. The code is available at <a href="https://github.com/saravanaj/vscode-mocha-ts-config" target="_blank" rel="noopener">https://github.com/saravanaj/vscode-mocha-ts-config</a></p><p><img src="/images/mocha-folder-structure.png" alt="Folder structure"></p><h3 id="Configuration"><a href="#Configuration" class="headerlink" title="Configuration"></a>Configuration</h3><p>Add a configuration to debug Mocha tests in <code>.vscode/launch.json</code>:</p><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"version"</span>: <span class="string">"0.2.0"</span>,</span><br><span class="line">    <span class="attr">"configurations"</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="attr">"type"</span>: <span class="string">"node"</span>,</span><br><span class="line">            <span class="attr">"request"</span>: <span class="string">"launch"</span>,</span><br><span class="line">            <span class="attr">"preLaunchTask"</span>: <span class="string">"tsc"</span>,</span><br><span class="line">            <span class="attr">"name"</span>: <span class="string">"Run Mocha"</span>,</span><br><span class="line">            <span class="attr">"program"</span>: <span class="string">"$&#123;workspaceRoot&#125;/node_modules/mocha/bin/_mocha"</span>,</span><br><span class="line">            <span class="attr">"args"</span>: [<span class="string">"$&#123;workspaceRoot&#125;/test/**/*.js"</span>],</span><br><span class="line">            <span class="attr">"cwd"</span>: <span class="string">"$&#123;workspaceRoot&#125;"</span>,</span><br><span class="line">            <span class="attr">"outFiles"</span>: []</span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>Note that the <code>preLaunchTask</code> property is set to the TypeScript compilation task I have defined in <code>.vscode/tasks.json</code>. This will compile all your <code>*.ts</code> files before running the tests. You can modify the <code>args</code> property to run a specific test file that you are debugging. Currently it executes all test files inside <code>test</code> directory.</p><p>And that is it. Add some breakpoints in your <code>*.test.ts</code> file and select <code>Run Mocha</code> from the debug dropdown:</p><p><img src="/images/mocha-debugger.png" alt="Debugger"></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;Visual Studio Code is an excellent editor for JavaScript/TypeScript development. One of the great things about it is how easily it integr
+      
+    
+    </summary>
+    
+    
+      <category term="config" scheme="https://saravanaj.github.io/tags/config/"/>
+    
+      <category term="visual studio code" scheme="https://saravanaj.github.io/tags/visual-studio-code/"/>
+    
+      <category term="mocha" scheme="https://saravanaj.github.io/tags/mocha/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Using Visual Studio 2015 as Diff and Merge Tool with Git</title>
+    <link href="https://saravanaj.github.io/2015/11/09/using-visual-studio-2015-as-diff-and-merge-tool-with-git/"/>
+    <id>https://saravanaj.github.io/2015/11/09/using-visual-studio-2015-as-diff-and-merge-tool-with-git/</id>
+    <published>2015-11-09T15:21:49.000Z</published>
+    <updated>2019-12-08T17:45:10.040Z</updated>
+    
+    <content type="html"><![CDATA[<p>Fixing merge conflicts in git without a good merge tool is a pain. If you are like me and are used to using Visual Studio for everything, you can setup Visual Studio to be your default diff and merge tool.</p><p>Add the following to your <code>.gitconfig</code> file in your home folder.</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">[diff]</span><br><span class="line">    tool = vsdiffmerge</span><br><span class="line">[difftool]</span><br><span class="line">    prompt = <span class="literal">false</span></span><br><span class="line">[difftool <span class="string">"vsdiffmerge"</span>]</span><br><span class="line">    cmd = \"C:\\Program Files (x86)\\Microsoft Visual Studio 14.0\\Common7\\IDE\\vsdiffmerge.exe\" \"<span class="variable">$LOCAL</span>\" \"<span class="variable">$REMOTE</span>\" //t</span><br><span class="line">    keepBackup = <span class="literal">false</span></span><br><span class="line">    trustExitCode = <span class="literal">true</span></span><br><span class="line">[merge]</span><br><span class="line">    tool = vsdiffmerge</span><br><span class="line">[mergetool]</span><br><span class="line">    prompt = <span class="literal">false</span></span><br><span class="line">    keepBackup = <span class="literal">false</span></span><br><span class="line">[mergetool <span class="string">"vsdiffmerge"</span>]</span><br><span class="line">    cmd = \"C:\\Program Files (x86)\\Microsoft Visual Studio 14.0\\Common7\\IDE\\vsdiffmerge.exe\" \"<span class="variable">$REMOTE</span>\" \"<span class="variable">$LOCAL</span>\" \"<span class="variable">$BASE</span>\" \"<span class="variable">$MERGED</span>\" //m</span><br><span class="line">    keepBackup = <span class="literal">false</span></span><br><span class="line">    trustExitCode = <span class="literal">true</span></span><br></pre></td></tr></table></figure><p>Once it is setup you can run <code>git difftool</code> for diffs and <code>git mergetool</code> when a conflict appears.</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;Fixing merge conflicts in git without a good merge tool is a pain. If you are like me and are used to using Visual Studio for everything,
+      
+    
+    </summary>
+    
+    
+      <category term="git" scheme="https://saravanaj.github.io/tags/git/"/>
+    
+      <category term="visual studio" scheme="https://saravanaj.github.io/tags/visual-studio/"/>
+    
+      <category term="mergetool" scheme="https://saravanaj.github.io/tags/mergetool/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Hexo Setup</title>
+    <link href="https://saravanaj.github.io/2015/11/09/hexo-setup/"/>
+    <id>https://saravanaj.github.io/2015/11/09/hexo-setup/</id>
+    <published>2015-11-09T14:18:10.000Z</published>
+    <updated>2019-12-08T17:45:10.038Z</updated>
+    
+    <content type="html"><![CDATA[<p>Welcome to <a href="http://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="http://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="http://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure><p>More info: <a href="http://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure><p>More info: <a href="http://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure><p>More info: <a href="http://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure><p>More info: <a href="http://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;Welcome to &lt;a href=&quot;http://hexo.io/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;http://hexo.io
+      
+    
+    </summary>
+    
+    
+      <category term="hexo" scheme="https://saravanaj.github.io/tags/hexo/"/>
+    
+      <category term="setup" scheme="https://saravanaj.github.io/tags/setup/"/>
+    
+      <category term="config" scheme="https://saravanaj.github.io/tags/config/"/>
+    
+  </entry>
+  
+</feed>
