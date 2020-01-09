@@ -62,11 +62,11 @@
     </summary>
     
     
+      <category term="config" scheme="https://saravanaj.github.io/tags/config/"/>
+    
       <category term="visual studio code" scheme="https://saravanaj.github.io/tags/visual-studio-code/"/>
     
       <category term="mocha" scheme="https://saravanaj.github.io/tags/mocha/"/>
-    
-      <category term="config" scheme="https://saravanaj.github.io/tags/config/"/>
     
   </entry>
   
@@ -116,11 +116,11 @@
     </summary>
     
     
-      <category term="config" scheme="https://saravanaj.github.io/tags/config/"/>
-    
       <category term="hexo" scheme="https://saravanaj.github.io/tags/hexo/"/>
     
       <category term="setup" scheme="https://saravanaj.github.io/tags/setup/"/>
+    
+      <category term="config" scheme="https://saravanaj.github.io/tags/config/"/>
     
   </entry>
   
