@@ -36,7 +36,7 @@
     
       <li><a href="https://twitter.com/saravanaj1">Twitter</a></li>
     
-      <li><a href="https://github.com/saravanaj">Github</a></li>
+      <li><a href="https://github.com/saravanaj">GitHub</a></li>
     
       <li><a href="https://stackoverflow.com/users/2419531/saravana">Stack Overflow</a></li>
     
@@ -54,7 +54,45 @@
     <header>
       
         <div class="icon"></div>
-        <time datetime="2017-02-05T03:25:38.000Z"><a href="/2017/02/05/debugging-mocha-tests-written-in-typescript-with-visual-studio-code/">2017-02-05</a></time>
+        <time datetime="2020-01-09T17:23:47.000Z"><a href="/2020/01/09/sharing-a-mysql-database-across-docker-containers/">2020-01-09</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2020/01/09/sharing-a-mysql-database-across-docker-containers/">Sharing a MySQL Database Across Docker Containers</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>There are instances where you may have a database that is running on a host machine that you want to access from inside a container. There are three ways to do this depending on the situation.</p>
+<h3 id="Using-the-Host-Network"><a href="#Using-the-Host-Network" class="headerlink" title="Using the Host Network"></a>Using the Host Network</h3><p>The <a href="https://docs.docker.com/network/host/" target="_blank" rel="noopener">host networking</a> mode will make the container use the same network as the host machine. This means the host machine and the container share the same IP and ports. So <code>localhost</code> inside the container is the same <code>localhost</code> in the host and you can connect to MySQL as if it was running in the same machine using <code>localhost</code>. </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run --network=<span class="string">"host"</span> &lt;container&gt;</span><br></pre></td></tr></table></figure>
+<p>This can be limiting in a lot of cases as you don’t have the flexibility of an isolated container network with different ports and IP. </p>
+<h3 id="Using-the-Docker-Bridge-Network"><a href="#Using-the-Docker-Bridge-Network" class="headerlink" title="Using the Docker Bridge Network"></a>Using the Docker Bridge Network</h3><p>Docker by default creates a network interface <code>docker0</code> on the host that all containers running on the host machine use. You can then use the IP address of host on the <code>docker0</code> (run <code>sudo ip addr show docker0</code> on the host) interface to connect from inside the container. The catch here is you will have to <a href="https://www.digitalocean.com/community/tutorials/how-to-allow-remote-access-to-mysql" target="_blank" rel="noopener">enable remote access to MySQL</a> by setting the <code>bind-address = 0.0.0.0</code>. This is usually a no-go for most situations.</p>
+<h3 id="Sharing-the-MySQL-Socket"><a href="#Sharing-the-MySQL-Socket" class="headerlink" title="Sharing the MySQL Socket"></a>Sharing the MySQL Socket</h3><p>Docker allows you to mount directories on your host machine to container. We can use this to share the socket used by MySQL. The socket is usually found at <code>/var/run/mysqld/mysqld.sock</code>. </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -v /var/run/mysqld:/host/mysqld &lt;container&gt;</span><br></pre></td></tr></table></figure>
+<p>Now we can access the sock file inside the Docker container mounted at <code>/host/mysqld/mysqld.sock</code> and <a href="https://dev.mysql.com/doc/refman/5.5/en/connecting.html" target="_blank" rel="noopener">connect to MySQL using the socket.</a></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2017-02-05T07:55:38.000Z"><a href="/2017/02/05/debugging-mocha-tests-written-in-typescript-with-visual-studio-code/">2017-02-05</a></time>
       
       
   
@@ -92,7 +130,7 @@
     <header>
       
         <div class="icon"></div>
-        <time datetime="2015-11-09T15:21:49.000Z"><a href="/2015/11/09/using-visual-studio-2015-as-diff-and-merge-tool-with-git/">2015-11-09</a></time>
+        <time datetime="2015-11-09T19:51:49.000Z"><a href="/2015/11/09/using-visual-studio-2015-as-diff-and-merge-tool-with-git/">2015-11-09</a></time>
       
       
   
@@ -126,7 +164,7 @@
     <header>
       
         <div class="icon"></div>
-        <time datetime="2015-11-09T14:18:10.000Z"><a href="/2015/11/09/hexo-setup/">2015-11-09</a></time>
+        <time datetime="2015-11-09T18:48:10.000Z"><a href="/2015/11/09/hexo-setup/">2015-11-09</a></time>
       
       
   
@@ -173,6 +211,10 @@
   
     <li><a href="/tags/config/">config</a><small>2</small></li>
   
+    <li><a href="/tags/containers/">containers</a><small>1</small></li>
+  
+    <li><a href="/tags/docker/">docker</a><small>1</small></li>
+  
     <li><a href="/tags/git/">git</a><small>1</small></li>
   
     <li><a href="/tags/hexo/">hexo</a><small>1</small></li>
@@ -180,6 +222,8 @@
     <li><a href="/tags/mergetool/">mergetool</a><small>1</small></li>
   
     <li><a href="/tags/mocha/">mocha</a><small>1</small></li>
+  
+    <li><a href="/tags/mysql/">mysql</a><small>1</small></li>
   
     <li><a href="/tags/setup/">setup</a><small>1</small></li>
   
@@ -195,6 +239,10 @@
 <div class="widget tag">
   <h3 class="title">Recent Posts</h3>
   <ul class="entry">
+    
+      <li>
+        <a href="/2020/01/09/sharing-a-mysql-database-across-docker-containers/">Sharing a MySQL Database Across Docker Containers</a>
+      </li>
     
       <li>
         <a href="/2017/02/05/debugging-mocha-tests-written-in-typescript-with-visual-studio-code/">Debugging Mocha Tests Written in TypeScript with Visual Studio Code</a>
@@ -216,7 +264,7 @@
   </div>
   <footer id="footer" class="inner"><div class="alignleft">
   
-  &copy; 2019 Saravana J
+  &copy; 2020 Saravana J
   
 </div>
 <div class="clearfix"></div></footer>
