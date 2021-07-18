@@ -73,5 +73,5 @@ feed:
 ## Docs: http://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repository: https://github.com/saravanaj/saravanaj.github.io.git
+  repository: git@github.com:saravanaj/saravanaj.github.io.git
   branch: master
