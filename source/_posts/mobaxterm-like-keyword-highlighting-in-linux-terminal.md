@@ -6,14 +6,13 @@ tags:
 ---
 
 One of the features that almost all terminal emulators on Linux lack is regex-based keyword highlighting. 
-For example MobaXterm on Windows highlights SSH session outputs automatically. It highlights IP addresses, common keywords like 'error', 'success', 'failed', etc.
+For example MobaXterm on Windows highlights SSH session outputs automatically. It highlights IP addresses, common keywords like 'error', 'success', 'failed', etc. [iTerm2](https://stackoverflow.com/a/41468739/2419531) on macOS has had it for years.
 
-#### Syntax highlighting in MobaXterm:
+#### Keyword highlighting in MobaXterm:
+
 ![MobaXterm keyword highlighting](/images/moba-feature-syntax-highlighting.png)
 
-### Options in Linux
-
-Gnome terminal has a [feature request open](https://gitlab.gnome.org/GNOME/gnome-terminal/-/issues/7771) for a long time. There are many great colorizers like [grc](https://github.com/garabik/grc) or [ccat](https://github.com/owenthereal/ccat), but none of them work with interactive programs like SSH.
+Gnome terminal has a [feature request open](https://gitlab.gnome.org/GNOME/gnome-terminal/-/issues/7771) for a long time, but no progress so far. There are many great colorizers like [grc](https://github.com/garabik/grc) or [ccat](https://github.com/owenthereal/ccat), but none of them work with interactive programs like SSH.
 
 What worked for me is [ChromaTerm](https://github.com/hSaria/ChromaTerm). You can wrap `ssh` with ChromaTerm and it will automatically colorize your SSH session:
 
