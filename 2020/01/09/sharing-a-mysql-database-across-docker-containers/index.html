@@ -1,0 +1,175 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Sharing a MySQL Database Across Docker Containers | Saravana J</title>
+  <meta name="author" content="Saravana J">
+  
+  <meta name="description" content="There are instances where you may have a database that is running on a host machine that you want to access from inside a container. There are three w">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="Sharing a MySQL Database Across Docker Containers"/>
+  <meta property="og:site_name" content="Saravana J"/>
+
+  
+    <meta property="og:image" content=""/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Saravana J" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">Saravana J</a></h1>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+      <li><a target="_blank" rel="noopener" href="https://twitter.com/saravanaj1">Twitter</a></li>
+    
+      <li><a target="_blank" rel="noopener" href="https://github.com/saravanaj">GitHub</a></li>
+    
+      <li><a target="_blank" rel="noopener" href="https://stackoverflow.com/users/2419531/saravana">Stack Overflow</a></li>
+    
+      <li><a href="/atom.xml">Feed</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2020-01-09T12:53:47.000Z"><a href="/2020/01/09/sharing-a-mysql-database-across-docker-containers/">2020-01-09</a></time>
+      
+      
+  
+    <h1 class="title">Sharing a MySQL Database Across Docker Containers</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>There are instances where you may have a database that is running on a host machine that you want to access from inside a container. There are three ways to do this depending on the situation.</p>
+<h3 id="Using-the-Host-Network"><a href="#Using-the-Host-Network" class="headerlink" title="Using the Host Network"></a>Using the Host Network</h3><p>The <a target="_blank" rel="noopener" href="https://docs.docker.com/network/host/">host networking</a> mode will make the container use the same network as the host machine. This means the host machine and the container share the same IP and ports. So <code>localhost</code> inside the container is the same <code>localhost</code> in the host and you can connect to MySQL as if it was running in the same machine using <code>localhost</code>. </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run --network=<span class="string">&quot;host&quot;</span> &lt;container&gt;</span><br></pre></td></tr></table></figure>
+<p>This can be limiting in a lot of cases as you don’t have the flexibility of an isolated container network with different ports and IP. </p>
+<h3 id="Using-the-Docker-Bridge-Network"><a href="#Using-the-Docker-Bridge-Network" class="headerlink" title="Using the Docker Bridge Network"></a>Using the Docker Bridge Network</h3><p>Docker by default creates a network interface <code>docker0</code> on the host that all containers running on the host machine use. You can then use the IP address of host on the <code>docker0</code> (run <code>sudo ip addr show docker0</code> on the host) interface to connect from inside the container. The catch here is you will have to <a target="_blank" rel="noopener" href="https://www.digitalocean.com/community/tutorials/how-to-allow-remote-access-to-mysql">enable remote access to MySQL</a> by setting the <code>bind-address = 0.0.0.0</code>. This is usually a no-go for most situations.</p>
+<h3 id="Sharing-the-MySQL-Socket"><a href="#Sharing-the-MySQL-Socket" class="headerlink" title="Sharing the MySQL Socket"></a>Sharing the MySQL Socket</h3><p>Docker allows you to mount directories on your host machine to container. We can use this to share the socket used by MySQL. The socket is usually found at <code>/var/run/mysqld/mysqld.sock</code>. </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -v /var/run/mysqld:/host/mysqld &lt;container&gt;</span><br></pre></td></tr></table></figure>
+
+<p>Now we can access the sock file inside the Docker container mounted at <code>/host/mysqld/mysqld.sock</code> and <a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/refman/5.5/en/connecting.html">connect to MySQL using the socket.</a></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+  
+  <div class="tags">
+    <a href="/tags/docker/">docker</a>, <a href="/tags/mysql/">mysql</a>, <a href="/tags/containers/">containers</a>
+  </div>
+
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+</div></div>
+    <aside id="sidebar" class="alignright">
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/config/">config</a><small>1</small></li>
+  
+    <li><a href="/tags/containers/">containers</a><small>1</small></li>
+  
+    <li><a href="/tags/docker/">docker</a><small>1</small></li>
+  
+    <li><a href="/tags/git/">git</a><small>1</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>1</small></li>
+  
+    <li><a href="/tags/mergetool/">mergetool</a><small>1</small></li>
+  
+    <li><a href="/tags/mocha/">mocha</a><small>1</small></li>
+  
+    <li><a href="/tags/mysql/">mysql</a><small>1</small></li>
+  
+    <li><a href="/tags/ssh/">ssh</a><small>1</small></li>
+  
+    <li><a href="/tags/visual-studio/">visual studio</a><small>1</small></li>
+  
+    <li><a href="/tags/visual-studio-code/">visual studio code</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">Recent Posts</h3>
+  <ul class="entry">
+    
+      <li>
+        <a href="/2021/07/15/mobaxterm-like-keyword-highlighting-in-linux-terminal/">MobaXterm-like Keyword Highlighting in Linux Terminal</a>
+      </li>
+    
+      <li>
+        <a href="/2020/01/09/sharing-a-mysql-database-across-docker-containers/">Sharing a MySQL Database Across Docker Containers</a>
+      </li>
+    
+      <li>
+        <a href="/2017/02/05/debugging-mocha-tests-written-in-typescript-with-visual-studio-code/">Debugging Mocha Tests Written in TypeScript with Visual Studio Code</a>
+      </li>
+    
+      <li>
+        <a href="/2015/11/09/using-visual-studio-2015-as-diff-and-merge-tool-with-git/">Using Visual Studio 2015 as Diff and Merge Tool with Git</a>
+      </li>
+    
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2022 Saravana J
+  
+</div>
+<div class="clearfix"></div></footer>
+  
+
+
+</body>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-71110588-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+</html>

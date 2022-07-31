@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Saravana J</title>
+  
+  
+  <link href="https://saravanaj.github.io/atom.xml" rel="self"/>
+  
+  <link href="https://saravanaj.github.io/"/>
+  <updated>2022-07-31T17:37:06.305Z</updated>
+  <id>https://saravanaj.github.io/</id>
+  
+  <author>
+    <name>Saravana J</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>MobaXterm-like Keyword Highlighting in Linux Terminal</title>
+    <link href="https://saravanaj.github.io/2021/07/15/mobaxterm-like-keyword-highlighting-in-linux-terminal/"/>
+    <id>https://saravanaj.github.io/2021/07/15/mobaxterm-like-keyword-highlighting-in-linux-terminal/</id>
+    <published>2021-07-15T16:53:27.000Z</published>
+    <updated>2022-07-31T17:37:06.305Z</updated>
+    
+    <content type="html"><![CDATA[<p>One of the features that almost all terminal emulators on Linux lack is regex-based keyword highlighting.<br>For example MobaXterm on Windows highlights SSH session outputs automatically. It highlights IP addresses, common keywords like ‘error’, ‘success’, ‘failed’, etc. <a href="https://stackoverflow.com/a/41468739/2419531">iTerm2</a> on macOS has had it for years.</p><h4 id="Keyword-highlighting-in-MobaXterm"><a href="#Keyword-highlighting-in-MobaXterm" class="headerlink" title="Keyword highlighting in MobaXterm:"></a>Keyword highlighting in MobaXterm:</h4><p><img src="/images/moba-feature-syntax-highlighting.png" alt="MobaXterm keyword highlighting"></p><p>Gnome terminal has a <a href="https://gitlab.gnome.org/GNOME/gnome-terminal/-/issues/7771">feature request open</a> for a long time, but no progress so far. There are many great colorizers like <a href="https://github.com/garabik/grc">grc</a> or <a href="https://github.com/owenthereal/ccat">ccat</a>, but none of them work with interactive programs like SSH.</p><p>What worked for me is <a href="https://github.com/hSaria/ChromaTerm">ChromaTerm</a>. You can wrap <code>ssh</code> with ChromaTerm and it will automatically colorize your SSH session:</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">ssh</span></span>() &#123; /usr/bin/ssh <span class="string">&quot;<span class="variable">$@</span>&quot;</span> | ct; &#125;</span><br></pre></td></tr></table></figure><h4 id="Here’s-ifconfig-from-an-SSH-session-colorized-with-ChromaTerm"><a href="#Here’s-ifconfig-from-an-SSH-session-colorized-with-ChromaTerm" class="headerlink" title="Here’s ifconfig from an SSH session colorized with ChromaTerm:"></a>Here’s <code>ifconfig</code> from an SSH session colorized with ChromaTerm:</h4><p><img src="/images/terminal-chroma-term.png" alt="SSH session with keyword highlighting"></p><p>Out of the box ChromaTerm highlights IP addresses and common words. You can use your own keywords and regex to highlight.<br>Just create a configuration file at <code>~/.chromaterm.yml</code> with your <a href="https://github.com/hSaria/ChromaTerm#highlight-rules">own highlight rules</a>:</p><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">rules:</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">description:</span> <span class="string">My</span> <span class="string">first</span> <span class="string">rule</span> <span class="string">colors</span> <span class="string">the</span> <span class="string">foreground</span></span><br><span class="line">  <span class="attr">regex:</span> <span class="string">hello.+world</span></span><br><span class="line">  <span class="attr">color:</span> <span class="string">f#ff0000</span></span><br></pre></td></tr></table></figure><p>If you are a network engineer and work with a lot of devices, the <a href="https://github.com/danielmacuare/netcli-highlight">netcli-highlight</a> repo has a lot of custom ChromaTerm rules for Cisco&#x2F;Arista&#x2F;Juniper devices!</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;One of the features that almost all terminal emulators on Linux lack is regex-based keyword highlighting.&lt;br&gt;For example MobaXterm on Win</summary>
+      
+    
+    
+    
+    
+    <category term="ssh" scheme="https://saravanaj.github.io/tags/ssh/"/>
+    
+    <category term="linux" scheme="https://saravanaj.github.io/tags/linux/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Sharing a MySQL Database Across Docker Containers</title>
+    <link href="https://saravanaj.github.io/2020/01/09/sharing-a-mysql-database-across-docker-containers/"/>
+    <id>https://saravanaj.github.io/2020/01/09/sharing-a-mysql-database-across-docker-containers/</id>
+    <published>2020-01-09T12:53:47.000Z</published>
+    <updated>2022-07-31T17:37:06.305Z</updated>
+    
+    <content type="html"><![CDATA[<p>There are instances where you may have a database that is running on a host machine that you want to access from inside a container. There are three ways to do this depending on the situation.</p><h3 id="Using-the-Host-Network"><a href="#Using-the-Host-Network" class="headerlink" title="Using the Host Network"></a>Using the Host Network</h3><p>The <a href="https://docs.docker.com/network/host/">host networking</a> mode will make the container use the same network as the host machine. This means the host machine and the container share the same IP and ports. So <code>localhost</code> inside the container is the same <code>localhost</code> in the host and you can connect to MySQL as if it was running in the same machine using <code>localhost</code>. </p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run --network=<span class="string">&quot;host&quot;</span> &lt;container&gt;</span><br></pre></td></tr></table></figure><p>This can be limiting in a lot of cases as you don’t have the flexibility of an isolated container network with different ports and IP. </p><h3 id="Using-the-Docker-Bridge-Network"><a href="#Using-the-Docker-Bridge-Network" class="headerlink" title="Using the Docker Bridge Network"></a>Using the Docker Bridge Network</h3><p>Docker by default creates a network interface <code>docker0</code> on the host that all containers running on the host machine use. You can then use the IP address of host on the <code>docker0</code> (run <code>sudo ip addr show docker0</code> on the host) interface to connect from inside the container. The catch here is you will have to <a href="https://www.digitalocean.com/community/tutorials/how-to-allow-remote-access-to-mysql">enable remote access to MySQL</a> by setting the <code>bind-address = 0.0.0.0</code>. This is usually a no-go for most situations.</p><h3 id="Sharing-the-MySQL-Socket"><a href="#Sharing-the-MySQL-Socket" class="headerlink" title="Sharing the MySQL Socket"></a>Sharing the MySQL Socket</h3><p>Docker allows you to mount directories on your host machine to container. We can use this to share the socket used by MySQL. The socket is usually found at <code>/var/run/mysqld/mysqld.sock</code>. </p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -v /var/run/mysqld:/host/mysqld &lt;container&gt;</span><br></pre></td></tr></table></figure><p>Now we can access the sock file inside the Docker container mounted at <code>/host/mysqld/mysqld.sock</code> and <a href="https://dev.mysql.com/doc/refman/5.5/en/connecting.html">connect to MySQL using the socket.</a></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;There are instances where you may have a database that is running on a host machine that you want to access from inside a container. Ther</summary>
+      
+    
+    
+    
+    
+    <category term="docker" scheme="https://saravanaj.github.io/tags/docker/"/>
+    
+    <category term="mysql" scheme="https://saravanaj.github.io/tags/mysql/"/>
+    
+    <category term="containers" scheme="https://saravanaj.github.io/tags/containers/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Debugging Mocha Tests Written in TypeScript with Visual Studio Code</title>
+    <link href="https://saravanaj.github.io/2017/02/05/debugging-mocha-tests-written-in-typescript-with-visual-studio-code/"/>
+    <id>https://saravanaj.github.io/2017/02/05/debugging-mocha-tests-written-in-typescript-with-visual-studio-code/</id>
+    <published>2017-02-05T03:25:38.000Z</published>
+    <updated>2022-07-31T17:37:06.305Z</updated>
+    
+    <content type="html"><![CDATA[<p>Visual Studio Code is an excellent editor for JavaScript&#x2F;TypeScript development. One of the great things about it is how easily it integrates with other tools. Let’s see how to integrate it with Mocha and debug tests written in TypeScript:</p><h3 id="Folder-Structure"><a href="#Folder-Structure" class="headerlink" title="Folder Structure"></a>Folder Structure</h3><p>Here is my folder structure. The code I want to test is in <code>src/main.ts</code> and my tests are in <code>test/main.test.ts</code>. The code is available at <a href="https://github.com/saravanaj/vscode-mocha-ts-config">https://github.com/saravanaj/vscode-mocha-ts-config</a></p><p><img src="/images/mocha-folder-structure.png" alt="Folder structure"></p><h3 id="Configuration"><a href="#Configuration" class="headerlink" title="Configuration"></a>Configuration</h3><p>Add a configuration to debug Mocha tests in <code>.vscode/launch.json</code>:</p><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;version&quot;</span><span class="punctuation">:</span> <span class="string">&quot;0.2.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;configurations&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;node&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;request&quot;</span><span class="punctuation">:</span> <span class="string">&quot;launch&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;preLaunchTask&quot;</span><span class="punctuation">:</span> <span class="string">&quot;tsc&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Run Mocha&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;program&quot;</span><span class="punctuation">:</span> <span class="string">&quot;$&#123;workspaceRoot&#125;/node_modules/mocha/bin/_mocha&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;args&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;$&#123;workspaceRoot&#125;/test/**/*.js&quot;</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;cwd&quot;</span><span class="punctuation">:</span> <span class="string">&quot;$&#123;workspaceRoot&#125;&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;outFiles&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">]</span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure><p>Note that the <code>preLaunchTask</code> property is set to the TypeScript compilation task I have defined in <code>.vscode/tasks.json</code>. This will compile all your <code>*.ts</code> files before running the tests. You can modify the <code>args</code> property to run a specific test file that you are debugging. Currently it executes all test files inside <code>test</code> directory.</p><p>And that is it. Add some breakpoints in your <code>*.test.ts</code> file and select <code>Run Mocha</code> from the debug dropdown:</p><p><img src="/images/mocha-debugger.png" alt="Debugger"></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;Visual Studio Code is an excellent editor for JavaScript&amp;#x2F;TypeScript development. One of the great things about it is how easily it i</summary>
+      
+    
+    
+    
+    
+    <category term="visual studio code" scheme="https://saravanaj.github.io/tags/visual-studio-code/"/>
+    
+    <category term="mocha" scheme="https://saravanaj.github.io/tags/mocha/"/>
+    
+    <category term="config" scheme="https://saravanaj.github.io/tags/config/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Using Visual Studio 2015 as Diff and Merge Tool with Git</title>
+    <link href="https://saravanaj.github.io/2015/11/09/using-visual-studio-2015-as-diff-and-merge-tool-with-git/"/>
+    <id>https://saravanaj.github.io/2015/11/09/using-visual-studio-2015-as-diff-and-merge-tool-with-git/</id>
+    <published>2015-11-09T15:21:49.000Z</published>
+    <updated>2022-07-31T17:37:06.305Z</updated>
+    
+    <content type="html"><![CDATA[<p>Fixing merge conflicts in git without a good merge tool is a pain. If you are like me and are used to using Visual Studio for everything, you can setup Visual Studio to be your default diff and merge tool.</p><p>Add the following to your <code>.gitconfig</code> file in your home folder.</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">[diff]</span><br><span class="line">    tool = vsdiffmerge</span><br><span class="line">[difftool]</span><br><span class="line">    prompt = <span class="literal">false</span></span><br><span class="line">[difftool <span class="string">&quot;vsdiffmerge&quot;</span>]</span><br><span class="line">    cmd = \&quot;C:\\Program Files (x86)\\Microsoft Visual Studio 14.0\\Common7\\IDE\\vsdiffmerge.exe\&quot; \&quot;<span class="variable">$LOCAL</span>\&quot; \&quot;<span class="variable">$REMOTE</span>\&quot; //t</span><br><span class="line">    keepBackup = <span class="literal">false</span></span><br><span class="line">    trustExitCode = <span class="literal">true</span></span><br><span class="line">[merge]</span><br><span class="line">    tool = vsdiffmerge</span><br><span class="line">[mergetool]</span><br><span class="line">    prompt = <span class="literal">false</span></span><br><span class="line">    keepBackup = <span class="literal">false</span></span><br><span class="line">[mergetool <span class="string">&quot;vsdiffmerge&quot;</span>]</span><br><span class="line">    cmd = \&quot;C:\\Program Files (x86)\\Microsoft Visual Studio 14.0\\Common7\\IDE\\vsdiffmerge.exe\&quot; \&quot;<span class="variable">$REMOTE</span>\&quot; \&quot;<span class="variable">$LOCAL</span>\&quot; \&quot;<span class="variable">$BASE</span>\&quot; \&quot;<span class="variable">$MERGED</span>\&quot; //m</span><br><span class="line">    keepBackup = <span class="literal">false</span></span><br><span class="line">    trustExitCode = <span class="literal">true</span></span><br></pre></td></tr></table></figure><p>Once it is setup you can run <code>git difftool</code> for diffs and <code>git mergetool</code> when a conflict appears.</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;Fixing merge conflicts in git without a good merge tool is a pain. If you are like me and are used to using Visual Studio for everything,</summary>
+      
+    
+    
+    
+    
+    <category term="git" scheme="https://saravanaj.github.io/tags/git/"/>
+    
+    <category term="visual studio" scheme="https://saravanaj.github.io/tags/visual-studio/"/>
+    
+    <category term="mergetool" scheme="https://saravanaj.github.io/tags/mergetool/"/>
+    
+  </entry>
+  
+</feed>

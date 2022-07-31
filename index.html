@@ -1,0 +1,290 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Saravana J</title>
+  <meta name="author" content="Saravana J">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+  <meta property="og:site_name" content="Saravana J"/>
+
+  
+    <meta property="og:image" content=""/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Saravana J" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">Saravana J</a></h1>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+      <li><a target="_blank" rel="noopener" href="https://twitter.com/saravanaj1">Twitter</a></li>
+    
+      <li><a target="_blank" rel="noopener" href="https://github.com/saravanaj">GitHub</a></li>
+    
+      <li><a target="_blank" rel="noopener" href="https://stackoverflow.com/users/2419531/saravana">Stack Overflow</a></li>
+    
+      <li><a href="/atom.xml">Feed</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper">
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2021-07-15T16:53:27.000Z"><a href="/2021/07/15/mobaxterm-like-keyword-highlighting-in-linux-terminal/">2021-07-15</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2021/07/15/mobaxterm-like-keyword-highlighting-in-linux-terminal/">MobaXterm-like Keyword Highlighting in Linux Terminal</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>One of the features that almost all terminal emulators on Linux lack is regex-based keyword highlighting.<br>For example MobaXterm on Windows highlights SSH session outputs automatically. It highlights IP addresses, common keywords like ‘error’, ‘success’, ‘failed’, etc. <a target="_blank" rel="noopener" href="https://stackoverflow.com/a/41468739/2419531">iTerm2</a> on macOS has had it for years.</p>
+<h4 id="Keyword-highlighting-in-MobaXterm"><a href="#Keyword-highlighting-in-MobaXterm" class="headerlink" title="Keyword highlighting in MobaXterm:"></a>Keyword highlighting in MobaXterm:</h4><p><img src="/images/moba-feature-syntax-highlighting.png" alt="MobaXterm keyword highlighting"></p>
+<p>Gnome terminal has a <a target="_blank" rel="noopener" href="https://gitlab.gnome.org/GNOME/gnome-terminal/-/issues/7771">feature request open</a> for a long time, but no progress so far. There are many great colorizers like <a target="_blank" rel="noopener" href="https://github.com/garabik/grc">grc</a> or <a target="_blank" rel="noopener" href="https://github.com/owenthereal/ccat">ccat</a>, but none of them work with interactive programs like SSH.</p>
+<p>What worked for me is <a target="_blank" rel="noopener" href="https://github.com/hSaria/ChromaTerm">ChromaTerm</a>. You can wrap <code>ssh</code> with ChromaTerm and it will automatically colorize your SSH session:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">ssh</span></span>() &#123; /usr/bin/ssh <span class="string">&quot;<span class="variable">$@</span>&quot;</span> | ct; &#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="Here’s-ifconfig-from-an-SSH-session-colorized-with-ChromaTerm"><a href="#Here’s-ifconfig-from-an-SSH-session-colorized-with-ChromaTerm" class="headerlink" title="Here’s ifconfig from an SSH session colorized with ChromaTerm:"></a>Here’s <code>ifconfig</code> from an SSH session colorized with ChromaTerm:</h4><p><img src="/images/terminal-chroma-term.png" alt="SSH session with keyword highlighting"></p>
+<p>Out of the box ChromaTerm highlights IP addresses and common words. You can use your own keywords and regex to highlight.<br>Just create a configuration file at <code>~/.chromaterm.yml</code> with your <a target="_blank" rel="noopener" href="https://github.com/hSaria/ChromaTerm#highlight-rules">own highlight rules</a>:</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">rules:</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">description:</span> <span class="string">My</span> <span class="string">first</span> <span class="string">rule</span> <span class="string">colors</span> <span class="string">the</span> <span class="string">foreground</span></span><br><span class="line">  <span class="attr">regex:</span> <span class="string">hello.+world</span></span><br><span class="line">  <span class="attr">color:</span> <span class="string">f#ff0000</span></span><br></pre></td></tr></table></figure>
+
+<p>If you are a network engineer and work with a lot of devices, the <a target="_blank" rel="noopener" href="https://github.com/danielmacuare/netcli-highlight">netcli-highlight</a> repo has a lot of custom ChromaTerm rules for Cisco&#x2F;Arista&#x2F;Juniper devices!</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2020-01-09T12:53:47.000Z"><a href="/2020/01/09/sharing-a-mysql-database-across-docker-containers/">2020-01-09</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2020/01/09/sharing-a-mysql-database-across-docker-containers/">Sharing a MySQL Database Across Docker Containers</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>There are instances where you may have a database that is running on a host machine that you want to access from inside a container. There are three ways to do this depending on the situation.</p>
+<h3 id="Using-the-Host-Network"><a href="#Using-the-Host-Network" class="headerlink" title="Using the Host Network"></a>Using the Host Network</h3><p>The <a target="_blank" rel="noopener" href="https://docs.docker.com/network/host/">host networking</a> mode will make the container use the same network as the host machine. This means the host machine and the container share the same IP and ports. So <code>localhost</code> inside the container is the same <code>localhost</code> in the host and you can connect to MySQL as if it was running in the same machine using <code>localhost</code>. </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run --network=<span class="string">&quot;host&quot;</span> &lt;container&gt;</span><br></pre></td></tr></table></figure>
+<p>This can be limiting in a lot of cases as you don’t have the flexibility of an isolated container network with different ports and IP. </p>
+<h3 id="Using-the-Docker-Bridge-Network"><a href="#Using-the-Docker-Bridge-Network" class="headerlink" title="Using the Docker Bridge Network"></a>Using the Docker Bridge Network</h3><p>Docker by default creates a network interface <code>docker0</code> on the host that all containers running on the host machine use. You can then use the IP address of host on the <code>docker0</code> (run <code>sudo ip addr show docker0</code> on the host) interface to connect from inside the container. The catch here is you will have to <a target="_blank" rel="noopener" href="https://www.digitalocean.com/community/tutorials/how-to-allow-remote-access-to-mysql">enable remote access to MySQL</a> by setting the <code>bind-address = 0.0.0.0</code>. This is usually a no-go for most situations.</p>
+<h3 id="Sharing-the-MySQL-Socket"><a href="#Sharing-the-MySQL-Socket" class="headerlink" title="Sharing the MySQL Socket"></a>Sharing the MySQL Socket</h3><p>Docker allows you to mount directories on your host machine to container. We can use this to share the socket used by MySQL. The socket is usually found at <code>/var/run/mysqld/mysqld.sock</code>. </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -v /var/run/mysqld:/host/mysqld &lt;container&gt;</span><br></pre></td></tr></table></figure>
+
+<p>Now we can access the sock file inside the Docker container mounted at <code>/host/mysqld/mysqld.sock</code> and <a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/refman/5.5/en/connecting.html">connect to MySQL using the socket.</a></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2017-02-05T03:25:38.000Z"><a href="/2017/02/05/debugging-mocha-tests-written-in-typescript-with-visual-studio-code/">2017-02-05</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2017/02/05/debugging-mocha-tests-written-in-typescript-with-visual-studio-code/">Debugging Mocha Tests Written in TypeScript with Visual Studio Code</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>Visual Studio Code is an excellent editor for JavaScript&#x2F;TypeScript development. One of the great things about it is how easily it integrates with other tools. Let’s see how to integrate it with Mocha and debug tests written in TypeScript:</p>
+<h3 id="Folder-Structure"><a href="#Folder-Structure" class="headerlink" title="Folder Structure"></a>Folder Structure</h3><p>Here is my folder structure. The code I want to test is in <code>src/main.ts</code> and my tests are in <code>test/main.test.ts</code>. The code is available at <a target="_blank" rel="noopener" href="https://github.com/saravanaj/vscode-mocha-ts-config">https://github.com/saravanaj/vscode-mocha-ts-config</a></p>
+<p><img src="/images/mocha-folder-structure.png" alt="Folder structure"></p>
+<h3 id="Configuration"><a href="#Configuration" class="headerlink" title="Configuration"></a>Configuration</h3><p>Add a configuration to debug Mocha tests in <code>.vscode/launch.json</code>:</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;version&quot;</span><span class="punctuation">:</span> <span class="string">&quot;0.2.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;configurations&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;node&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;request&quot;</span><span class="punctuation">:</span> <span class="string">&quot;launch&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;preLaunchTask&quot;</span><span class="punctuation">:</span> <span class="string">&quot;tsc&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Run Mocha&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;program&quot;</span><span class="punctuation">:</span> <span class="string">&quot;$&#123;workspaceRoot&#125;/node_modules/mocha/bin/_mocha&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;args&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;$&#123;workspaceRoot&#125;/test/**/*.js&quot;</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;cwd&quot;</span><span class="punctuation">:</span> <span class="string">&quot;$&#123;workspaceRoot&#125;&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;outFiles&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">]</span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>Note that the <code>preLaunchTask</code> property is set to the TypeScript compilation task I have defined in <code>.vscode/tasks.json</code>. This will compile all your <code>*.ts</code> files before running the tests. You can modify the <code>args</code> property to run a specific test file that you are debugging. Currently it executes all test files inside <code>test</code> directory.</p>
+<p>And that is it. Add some breakpoints in your <code>*.test.ts</code> file and select <code>Run Mocha</code> from the debug dropdown:</p>
+<p><img src="/images/mocha-debugger.png" alt="Debugger"></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-11-09T15:21:49.000Z"><a href="/2015/11/09/using-visual-studio-2015-as-diff-and-merge-tool-with-git/">2015-11-09</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/11/09/using-visual-studio-2015-as-diff-and-merge-tool-with-git/">Using Visual Studio 2015 as Diff and Merge Tool with Git</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>Fixing merge conflicts in git without a good merge tool is a pain. If you are like me and are used to using Visual Studio for everything, you can setup Visual Studio to be your default diff and merge tool.</p>
+<p>Add the following to your <code>.gitconfig</code> file in your home folder.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">[diff]</span><br><span class="line">    tool = vsdiffmerge</span><br><span class="line">[difftool]</span><br><span class="line">    prompt = <span class="literal">false</span></span><br><span class="line">[difftool <span class="string">&quot;vsdiffmerge&quot;</span>]</span><br><span class="line">    cmd = \&quot;C:\\Program Files (x86)\\Microsoft Visual Studio 14.0\\Common7\\IDE\\vsdiffmerge.exe\&quot; \&quot;<span class="variable">$LOCAL</span>\&quot; \&quot;<span class="variable">$REMOTE</span>\&quot; //t</span><br><span class="line">    keepBackup = <span class="literal">false</span></span><br><span class="line">    trustExitCode = <span class="literal">true</span></span><br><span class="line">[merge]</span><br><span class="line">    tool = vsdiffmerge</span><br><span class="line">[mergetool]</span><br><span class="line">    prompt = <span class="literal">false</span></span><br><span class="line">    keepBackup = <span class="literal">false</span></span><br><span class="line">[mergetool <span class="string">&quot;vsdiffmerge&quot;</span>]</span><br><span class="line">    cmd = \&quot;C:\\Program Files (x86)\\Microsoft Visual Studio 14.0\\Common7\\IDE\\vsdiffmerge.exe\&quot; \&quot;<span class="variable">$REMOTE</span>\&quot; \&quot;<span class="variable">$LOCAL</span>\&quot; \&quot;<span class="variable">$BASE</span>\&quot; \&quot;<span class="variable">$MERGED</span>\&quot; //m</span><br><span class="line">    keepBackup = <span class="literal">false</span></span><br><span class="line">    trustExitCode = <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<p>Once it is setup you can run <code>git difftool</code> for diffs and <code>git mergetool</code> when a conflict appears.</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+<nav id="pagination">
+  
+  
+  <div class="clearfix"></div>
+</nav></div></div>
+    <aside id="sidebar" class="alignright">
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/config/">config</a><small>1</small></li>
+  
+    <li><a href="/tags/containers/">containers</a><small>1</small></li>
+  
+    <li><a href="/tags/docker/">docker</a><small>1</small></li>
+  
+    <li><a href="/tags/git/">git</a><small>1</small></li>
+  
+    <li><a href="/tags/linux/">linux</a><small>1</small></li>
+  
+    <li><a href="/tags/mergetool/">mergetool</a><small>1</small></li>
+  
+    <li><a href="/tags/mocha/">mocha</a><small>1</small></li>
+  
+    <li><a href="/tags/mysql/">mysql</a><small>1</small></li>
+  
+    <li><a href="/tags/ssh/">ssh</a><small>1</small></li>
+  
+    <li><a href="/tags/visual-studio/">visual studio</a><small>1</small></li>
+  
+    <li><a href="/tags/visual-studio-code/">visual studio code</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">Recent Posts</h3>
+  <ul class="entry">
+    
+      <li>
+        <a href="/2021/07/15/mobaxterm-like-keyword-highlighting-in-linux-terminal/">MobaXterm-like Keyword Highlighting in Linux Terminal</a>
+      </li>
+    
+      <li>
+        <a href="/2020/01/09/sharing-a-mysql-database-across-docker-containers/">Sharing a MySQL Database Across Docker Containers</a>
+      </li>
+    
+      <li>
+        <a href="/2017/02/05/debugging-mocha-tests-written-in-typescript-with-visual-studio-code/">Debugging Mocha Tests Written in TypeScript with Visual Studio Code</a>
+      </li>
+    
+      <li>
+        <a href="/2015/11/09/using-visual-studio-2015-as-diff-and-merge-tool-with-git/">Using Visual Studio 2015 as Diff and Merge Tool with Git</a>
+      </li>
+    
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2022 Saravana J
+  
+</div>
+<div class="clearfix"></div></footer>
+  
+
+
+</body>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-71110588-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+</html>
